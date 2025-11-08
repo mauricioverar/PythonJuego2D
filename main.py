@@ -1,12 +1,30 @@
+import esper
+import pygame
 import os
 os.environ["SDL_AUDIODRIVER"] = "dummy"
 
-import pygame
-import esper
 
-pygame.init()
-screen = pygame.display.set_mode((800, 600))
-clock = pygame.time.Clock()
+try:
+    pygame.init()
+    print("[INFO] pygame inicializado correctamente")
+except Exception as e:
+    print(f"[ERROR] Falló la inicialización de pygame: {e}")
+    exit(1)
+
+try:
+    world = esper.World()
+    print("[INFO] Mundo ECS creado con esper")
+except Exception as e:
+    print(f"[ERROR] Falló la creación del mundo ECS: {e}")
+    exit(1)
+
+try:
+    screen = pygame.display.set_mode((800, 600))
+    clock = pygame.time.Clock()
+    print("[INFO] Pantalla y reloj inicializados")
+except Exception as e:
+    print(f"[ERROR] Falló la creación de pantalla o reloj: {e}")
+    exit(1)
 
 # Componentos
 class Position:
