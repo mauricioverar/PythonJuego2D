@@ -78,7 +78,22 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        # controles
+
+    # controles
+    keys = pygame.key.get_pressed()
+    speed = 200  # píxeles por segundo
+
+    vel = world.component_for_entity(player, Velocity)
+    vel.dx = vel.dy = 0  # Reiniciar velocidad cada frame
+
+    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+        vel.dx = -speed
+    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+        vel.dx = speed
+    if keys[pygame.K_UP] or keys[pygame.K_w]:
+        vel.dy = -speed
+    if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+        vel.dy = speed
 
     # Salida automática en CI/CD después de 5 segundos
     if ci_mode and time.time() - start_time > 5:

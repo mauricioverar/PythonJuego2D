@@ -1,24 +1,28 @@
-# 🕹️ pythonJuego2D
+🕹️ pythonJuego2D
+Juego 2D modular desarrollado en Python con arquitectura ECS usando  y . Validado localmente y en CI/CD con pytest y , asegurando trazabilidad, reproducibilidad y defensa técnica para entrevistas y portfolio.
 
-Un juego 2D modular desarrollado en Python con arquitectura ECS usando [esper](https://github.com/benmoran56/esper) y [pygame](https://www.pygame.org/). Validado localmente y en CI/CD con `pytest` y [act](https://github.com/nektos/act) para asegurar trazabilidad, reproducibilidad y defensa técnica.
+🚀 Características
+- 🧩 Arquitectura Entity-Component-System (ECS) con esper
+- 🎮 Renderizado en tiempo real con pygame
+- ✅ Validación automatizada con pytest
+- 🔁 Integración continua con GitHub Actions
+- 🐳 Validación local con act (simulación de CI/CD en Docker)
+- 🧪 Modo CI automático: ejecución controlada sin entorno gráfico
+- ⌨️ Controles con teclado (WASD / flechas) para movimiento del jugador
+- 📄 Documentación modular para defensa técnica
 
-
-## 🚀 Características
-
-- Arquitectura basada en **Entity-Component-System (ECS)** con `esper`
-- Renderizado en tiempo real con `pygame`
-- Validación automatizada con `pytest`
-- Compatible con **GitHub Actions** y validación local con `act`
-- Preparado para entornos CI/CD sin entorno gráfico
-
-
-## 📦 Requisitos
-
+📦 Requisitos
 - Python 3.13+
-- Docker (para usar `act`)
-- `pip install -r requirements.txt`
+- Docker (para usar act)
+- Instalar dependencias:
+    pip install -r requirements.txt
+    esper==2.3
+    pygame==2.6.1
+    pytest
 
-```txt
-esper==2.3
-pygame==2.6.1
-pytest
+🧪 Validación en CI/CD
+Este proyecto incluye un workflow de GitHub Actions que:
+- Instala dependencias
+- Ejecuta el juego en modo CI (CI=true)
+- Corre pruebas con pytest
+- Realiza commit automático si hay cambios
