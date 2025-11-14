@@ -8,6 +8,8 @@ from components import Position, Velocity, Sprite
 from grid import grid, revealed, draw_grid, auto_reveal_non_mines
 from input import handle_input
 
+from systems import MovementSystem, RenderSystem
+
 # 🧱 Inicialización segura
 os.environ["SDL_AUDIODRIVER"] = "dummy"
 
@@ -47,20 +49,9 @@ world.add_component(player, Sprite(player_sprite))
 
 # 🌀 Sistemas ECS
 
-
-def movement_system(world, dt):
-    for ent, (pos, vel) in world.get_components(Position, Velocity):
-        pos.x += vel.dx * dt
-        pos.y += vel.dy * dt
-
-
-def render_system(world, dt):
-    screen.fill((30, 30, 30))
-    draw_grid(screen)
-    for ent, (pos, sprite) in world.get_components(Position, Sprite):
-        screen.blit(sprite.image, (pos.x * CELL_SIZE +
-                    25, pos.y * CELL_SIZE + 25))
-    pygame.display.flip()
+# Registrar sistemas ECS
+world.add_processor(MovementSystem())
+world.add_processor(RenderSystem(screen))
 
 
 # 🚀 Bucle principal
@@ -83,8 +74,7 @@ while running:
         print("[INFO] Finalizando ejecución automática en entorno CI/CD")
         running = False
 
-    world.process()
-    render_system(world, dt)
+    world.process(dt)
 
 pygame.quit()
 print("[INFO] Juego finalizado correctamente")
