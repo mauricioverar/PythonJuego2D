@@ -26,10 +26,10 @@ jobs:
           pip check
 
       - name: Run juego
-        run: CI=true python main.py
+        run: CI=true python src/main.py
 
       - name: Run tests
-        run: pytest
+        run: pytest src/
 
       - name: Commit & Push
         uses: stefanzweifel/git-auto-commit-action@v7
