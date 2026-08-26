@@ -114,6 +114,10 @@ pythonJuego2D/
 └── .github/workflows/  # Workflows de CI/CD
 ```
 
+## 👥 Colaboradores
+
+- [@atlalta](https://github.com/atlalta) – Refactorización del manejo de teclas
+
 
 ## 📄 Licencia
 
