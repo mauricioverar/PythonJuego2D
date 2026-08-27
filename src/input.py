@@ -34,7 +34,7 @@ def handle_input(event, player, grid, revealed, world):
     pos = world.component_for_entity(player, Position)
     move_player(event, pos, grid)
     if reveal_cell(event, pos, revealed, grid):
-        print("[INFO] ¡Has ganado! 🎉")
+        print("[INFO] ¡Has ganado!!!! 🎉")
 
 
 def check_victory(grid, revealed):
