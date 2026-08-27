@@ -1,6 +1,9 @@
 import pygame
 from components import Position
 
+pygame.mixer.init()
+victory_sound = pygame.mixer.Sound("src/assets/victory.wav")
+
 MOVE_MAP = {
     pygame.K_LEFT: (-1, 0),
     pygame.K_a: (-1, 0),
@@ -35,6 +38,11 @@ def handle_input(event, player, grid, revealed, world):
     move_player(event, pos, grid)
     if reveal_cell(event, pos, revealed, grid):
         print("[INFO] ¡Has ganado!!!! 🎉")
+
+        # Reproducir sonido de victoria
+        victory_sound.set_volume(0.7)
+        victory_sound.play()
+
         # Mostrar mensaje en pantalla
         screen = pygame.display.get_surface()
         font = pygame.font.SysFont(None, 72)
