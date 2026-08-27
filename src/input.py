@@ -34,7 +34,18 @@ def handle_input(event, player, grid, revealed, world):
     pos = world.component_for_entity(player, Position)
     move_player(event, pos, grid)
     if reveal_cell(event, pos, revealed, grid):
-        print("[INFO] ¡Has ganado! 🎉")
+        print("[INFO] ¡Has ganado!!!! 🎉")
+        # Mostrar mensaje en pantalla
+        screen = pygame.display.get_surface()
+        font = pygame.font.SysFont(None, 72)
+        text = font.render("¡Has ganado!", True, (0, 255, 0))
+        rect = text.get_rect(
+            center=(screen.get_width()//2, screen.get_height()//2))
+        screen.blit(text, rect)
+        pygame.display.flip()
+        pygame.time.wait(3000)  # espera 3 segundos
+        pygame.quit()
+        exit(0)
 
 
 def check_victory(grid, revealed):
