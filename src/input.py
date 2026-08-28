@@ -1,5 +1,9 @@
 import pygame
+import os
 from components import Position
+
+if os.getenv("CI") == "true":
+    os.environ["SDL_AUDIODRIVER"] = "dummy"
 
 pygame.mixer.init()
 victory_sound = pygame.mixer.Sound("src/assets/victory.wav")
