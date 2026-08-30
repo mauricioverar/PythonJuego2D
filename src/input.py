@@ -1,6 +1,8 @@
+import math
 import pygame
 import os
 import sys
+from array import array
 from components import Position
 
 if os.getenv("CI") == "true":
@@ -8,6 +10,29 @@ if os.getenv("CI") == "true":
 
 pygame.mixer.init()
 victory_sound = pygame.mixer.Sound("src/assets/victory.wav")
+
+
+def play_reveal_sound():
+    """Genera un pequeño beep para celdas vacías reveladas."""
+    sample_rate = 22050
+    duration = 0.08
+    frequency = 680
+    volume = 0.2
+    total_samples = int(sample_rate * duration)
+    samples = array('h')
+
+    for i in range(total_samples):
+        t = i / sample_rate
+        envelope = max(0.0, 1.0 - (t / duration) * 1.4)
+        wave = math.sin(2 * math.pi * frequency * t)
+        value = int(32767 * wave * envelope * volume)
+        samples.append(value)
+
+    sound = pygame.mixer.Sound(buffer=samples.tobytes())
+    sound.set_volume(0.7)
+    sound.play()
+    return sound
+
 
 MOVE_MAP = {
     pygame.K_LEFT: (-1, 0),
@@ -32,8 +57,15 @@ def move_player(event, pos, grid):
 
 
 def reveal_cell(event, pos, revealed, grid):
-    if event.key in ACTION_KEYS and not revealed[int(pos.y)][int(pos.x)]:
-        revealed[int(pos.y)][int(pos.x)] = True
+    x = int(pos.x)
+    y = int(pos.y)
+
+    if event.key in ACTION_KEYS and not revealed[y][x]:
+        revealed[y][x] = True
+
+        if grid[y][x] == '':
+            play_reveal_sound()
+
         if check_victory(grid, revealed):
             return True  # devuelve estado de victoria
     return False
