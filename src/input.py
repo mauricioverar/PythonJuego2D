@@ -8,8 +8,13 @@ from components import Position
 if os.getenv("CI") == "true":
     os.environ["SDL_AUDIODRIVER"] = "dummy"
 
-pygame.mixer.init()
-victory_sound = pygame.mixer.Sound("src/assets/victory.wav")
+try:
+    pygame.mixer.init()
+    victory_sound = pygame.mixer.Sound("src/assets/victory.wav")
+except pygame.error as e:
+    print(f"[WARN] No se pudo inicializar el audio: {e}")
+    victory_sound = None
+
 
 
 def play_reveal_sound():
@@ -60,14 +65,24 @@ def reveal_cell(event, pos, revealed, grid):
     x = int(pos.x)
     y = int(pos.y)
 
-    if event.key in ACTION_KEYS and not revealed[y][x]:
-        revealed[y][x] = True
+    try:
+        if event.key in ACTION_KEYS and not revealed[y][x]:
+            revealed[y][x] = True
 
-        if grid[y][x] == '':
-            play_reveal_sound()
+            # Intentar reproducir sonido si la celda está vacía
+            if grid[y][x] == '':
+                try:
+                    play_reveal_sound()
+                except Exception as e:
+                    print(f"[WARN] No se pudo reproducir sonido: {e}")
 
-        if check_victory(grid, revealed):
-            return True  # devuelve estado de victoria
+            # Verificar victoria
+            if check_victory(grid, revealed):
+                return True  # devuelve estado de victoria
+    except IndexError:
+        print(f"[ERROR] Índice fuera de rango: ({x}, {y})")
+    except Exception as e:
+        print(f"[ERROR] Error inesperado en reveal_cell: {e}")
     return False
 
 
@@ -78,8 +93,13 @@ def handle_input(event, player, grid, revealed, world):
         print("[INFO] ¡Has ganado!!!! 🎉")
 
         # Reproducir sonido de victoria
-        victory_sound.set_volume(0.7)
-        victory_sound.play()
+        if victory_sound:
+            try:
+                victory_sound.set_volume(0.7)
+                victory_sound.play()
+            except pygame.error as e:
+                print(f"[WARN] Error al reproducir sonido: {e}")
+
 
         # Mostrar mensaje en pantalla
         screen = pygame.display.get_surface()
