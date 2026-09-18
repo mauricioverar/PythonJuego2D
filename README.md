@@ -116,7 +116,8 @@ pythonJuego2D/
 
 ## 👥 Colaboradores
 
-- [@atlalta](https://github.com/atlalta) – Refactorización del manejo de teclas
+- [@atlalta](https://github.com/atlalta)
+- [@Atres](https://github.com/A3tres)
 
 
 ## 📄 Licencia
